@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import { expect } from "chai";
-
-const request  = supertest('https://gorest.co.in/public/api/')
+  
+const request  = supertest('https://gorest.co.in/public/v2/')
 
 /**
  * start a testing for users data...
@@ -19,6 +19,48 @@ describe('users' , ()=>{
             expect(res.body).to.be.not.null;
             done();
         })
+    })
+
+    it('GET /users/:id/',()=>{
+        request
+        .get(`users/:1?access-token=${TOKEN}`,()=>{
+            expect(res.body.id).to.be.eq(1);
+        })
+    })
+
+    it('GET /users/with query params',()=>{
+        const status = 'active'
+        const gender = 'female'
+        request
+        .get(`users/?access-token=${TOKEN}&status=${status}&gender=${gender}`,()=>{
+            expect(res.body).to.be.not.empty;
+            res.body.data.forEach(data => {
+                expect(data.gender).to.eq("female")
+                expect(data.status).to.eq("active")
+            });
+        })
+    })
+
+    it('POST /users',()=>{
+        const data={
+            email:'fre@gmail.ca',
+            name:'Frita',
+            gender:'female',
+            status:'active'
+        }
+        return request.post('/users')
+        .set("Authorization",`Bearer ${TOKEN}`)
+        .send(data)
+        .then((res)=>{
+            // console.log('added data : ' +JSON.stringify(res.body));
+            expect(JSON.stringify(res.body[0].name)).to.be.eq('Frita');
+            expect(JSON.stringify(res.body.email)).to.be.eq('fre@gmail.ca');
+            expect(JSON.stringify(res.body.gender)).to.be.eq('female');
+            expect(JSON.stringify(res.body.status)).to.be.eq('active');
+
+            // done();
+        })
+
     })
 })
 
