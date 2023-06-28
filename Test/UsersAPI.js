@@ -43,8 +43,8 @@ describe('users' , ()=>{
 
     it('POST /users',()=>{
         const data={
-            email:'fre@gmail.ca',
-            name:'Frita',
+            email:'fres3030@gmail.ca',
+            name:'Fritas5',
             gender:'female',
             status:'active'
         }
@@ -53,10 +53,10 @@ describe('users' , ()=>{
         .send(data)
         .then((res)=>{
             // console.log('added data : ' +JSON.stringify(res.body));
-            expect(JSON.stringify(res.body[0].name)).to.be.eq('Frita');
-            expect(JSON.stringify(res.body.email)).to.be.eq('fre@gmail.ca');
-            expect(JSON.stringify(res.body.gender)).to.be.eq('female');
-            expect(JSON.stringify(res.body.status)).to.be.eq('active');
+            expect(res.body.name).to.be.eq(data.name);
+            expect(res.body.email).to.be.eq(data.email);
+            expect(res.body.gender).to.be.eq(data.gender);
+            expect(res.body.status).to.be.eq(data.status);
 
             // done();
         })
