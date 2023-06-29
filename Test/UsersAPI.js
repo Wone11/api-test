@@ -65,5 +65,23 @@ describe('users' , ()=>{
         })
 
     })
+
+    it('PUT /users:id',()=>{
+        // console.log('here we are ready to update a data!');
+        const id =3355342
+        const data ={
+            status:"inactive",
+            name:"Bura - " + Math.floor(Math.random() * 100),
+            gender:"male"
+        }
+
+        return request.put(`users/${id}`)
+               .set('Authorization', `Bearer ${TOKEN}`)
+               .send(data)
+               .then((res)=>{
+                expect(res.body).to.deep.include(data)
+               })
+
+    })
 })
 
