@@ -59,6 +59,7 @@ describe('users' , ()=>{
             // expect(res.body.email).to.be.eq(data.email);
             // expect(res.body.gender).to.be.eq(data.gender);
             // expect(res.body.status).to.be.eq(data.status);
+    
 
             // done();
         })
